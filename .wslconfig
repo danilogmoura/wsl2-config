@@ -1,8 +1,0 @@
-[wsl2]
-# Sets amount of swap storage space to 8GB, default is 25% of available RAM
-swap=24GB
-
-# Enable experiemntal features
-[experimental] 
-dnsTunneling=true
-autoMemoryReclaim=gradual

@@ -107,7 +107,7 @@ $ cd /tmp
 $ wget https://az764295.vo.msecnd.net/insider/6a7a661757dec1983ff05ef908a2bbb75ce841e0/code-insiders_1.84.0-1697003734_amd64.deb	
 $ sudo dpkg -i code-insiders_1.84.0-1697003734_amd64.deb
 
-alias code='_params(){ DONT_PROMPT_WSL_INSTALL=1 code-insiders "$1" > /dev/null 2>&1 &;}; _params'
+alias code='_params(){ DONT_PROMPT_WSL_INSTALL=1 code-insiders "$1" > /dev/null 2>&1 &}; _params'
 
 
 ## IntelliJ IDEA (https://www.jetbrains.com/idea/download/?section=linux) ## 
