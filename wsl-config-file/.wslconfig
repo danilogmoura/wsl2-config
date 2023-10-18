@@ -1,0 +1,9 @@
+[wsl2]
+swap=16GB
+swapFile=C:\\Users\\XXXXXXXX\\AppData\\Local\\Temp\\swap.vhdx
+memory=8GB
+
+# Enable experiemntal features
+[experimental] 
+dnsTunneling=true
+autoMemoryReclaim=gradual
