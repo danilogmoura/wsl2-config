@@ -3,6 +3,9 @@ RST="\e[0m"
 YEL="\e[0;33m"
 RED="\e[1;31m"
 
+default_user="demo"
+host_name="demo-host"
+
 # https://www.jetbrains.com/idea/download/?section=linux
 INTELLIJ_VERSION="2023.2.3"
 # https://www.jetbrains.com/datagrip/download/#section=linux
@@ -21,20 +24,20 @@ fi
 touch ~/.hushlogin
 
 echo -e $YEL"Update & Upgrade"$RST
-sudo apt-get update -qqq -y
-sudo apt-get upgrade -qqq -y
+sudo apt-get update -q
+sudo apt-get upgrade -qq -y
 
 echo -e $YEL"Google Chrome"$RST
 curl -fsSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o /tmp/google-chrome_amd64.deb
 sudo dpkg -i /tmp/google-chrome_amd64.deb 2>/dev/null
-sudo apt-get install -qqq -y --fix-broken
+sudo apt-get install -qq -y --fix-broken
 sudo dpkg -i /tmp/google-chrome_amd64.deb 2>/dev/null
 echo "alias chrome='google-chrome > /dev/null 2>&1 &'" >> $SHELLRC
 
 echo -e $YEL"Install VS Code Insiders"$RST
 curl -fsSL https://az764295.vo.msecnd.net/insider/6a7a661757dec1983ff05ef908a2bbb75ce841e0/code-insiders_1.84.0-1697003734_amd64.deb -o /tmp/code-insiders_amd64.deb
 sudo dpkg -i /tmp/code-insiders_amd64.deb 2>/dev/null
-sudo apt-get install -qqq -y --fix-broken
+sudo apt-get install -qq -y --fix-broken
 sudo dpkg -i /tmp/code-insiders_amd64.deb 2>/dev/null
 echo "alias code='_params(){ DONT_PROMPT_WSL_INSTALL=1 code-insiders \"\$1\" > /dev/null 2>&1 &}; _params'" >> $SHELLRC
 
@@ -68,9 +71,28 @@ echo \
   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update -qqq
+sudo apt-get update -q
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -qqq -y
 sudo usermod -aG docker $USER
 
-sudo apt-get autoremove -qqq -y
+sudo apt-get autoremove -qq -y
+
+echo -e $YEL"Rename host name"$RST
+host_in_file="$(grep -m 1 -n $(hostname) /etc/hosts | cut -f1 -d:)"
+
+if [ ! -z "$host_in_file" ] 
+then
+  sudo echo "
+  [network]
+  hostname = ${host_name}
+  generateHosts = false
+
+  [user]
+  default= ${default_user} " >> /etc/wsl.conf
+  
+  sudo sed -i "${host_in_file}s/$(hostname)/${host_name}/g" /etc/hosts
+  
+  sudo echo "${host_name}" > /etc/hostname
+fi
+
 echo -e $YEL"Installation completed successfully"$RST
