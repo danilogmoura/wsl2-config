@@ -3,8 +3,12 @@ RST="\e[0m"
 YEL="\e[0;33m"
 RED="\e[1;31m"
 
+# https://www.jetbrains.com/idea/download/?section=linux
 INTELLIJ_VERSION="2023.2.3"
-
+# https://www.jetbrains.com/datagrip/download/#section=linux
+DATAGRIP_VERSION="2023.2.2"
+# https://github.com/nvm-sh/nvm
+NVM_VERSION="v0.39.5"
 
 CURRENT_SHELL="bash"
 SHELLRC="$HOME/.bashrc"
@@ -15,7 +19,6 @@ if [[ $SHELL != *"$CURRENT_SHELL"* ]]; then
 fi
 
 touch ~/.hushlogin
-echo -e $YEL"Created ~/.hushlogin..."$RST
 
 echo -e $YEL"Update & Upgrade"$RST
 sudo apt-get update -qqq -y
@@ -35,16 +38,26 @@ sudo apt-get install -qqq -y --fix-broken
 sudo dpkg -i /tmp/code-insiders_amd64.deb 2>/dev/null
 echo "alias code='_params(){ DONT_PROMPT_WSL_INSTALL=1 code-insiders \"\$1\" > /dev/null 2>&1 &}; _params'" >> $SHELLRC
 
-echo -e $YEL"Install Node Version Manager (https://github.com/nvm-sh/nvm)"$RST
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+echo -e $YEL"Install Node Version Manager"$RST
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm --version
 
-echo -e $YEL"Install IntelliJ IDEA (https://www.jetbrains.com/idea/download/?section=linux)"$RST
-curl -fsSL https://download-cdn.jetbrains.com/idea/ideaIU-${INTELLIJ_VERSION}.tar.gz -o /tmp/idea-IU.tar.gz
-sudo tar xvfz /tmp/idea-IU.tar.gz -C /opt --transform 's!^[^/]*!idea-IU!'
-echo "alias intellij='/opt/idea-IU/bin/idea.sh > /dev/null 2>&1 &'" >> $SHELLRC
+echo -e $YEL"Install Postman"$RST
+curl -fsSL https://dl.pstmn.io/download/latest/linux_64 -o /tmp/postman.tar.gz
+sudo tar xvfz /tmp/postman.tar.gz -C /opt
+echo "alias postman='/opt/Postman/Postman > /dev/null 2>&1 &'" >> $SHELLRC
+
+echo -e $YEL"Install IntelliJ IDEA"$RST
+curl -fsSL https://download-cdn.jetbrains.com/idea/ideaIU-${INTELLIJ_VERSION}.tar.gz -o /tmp/intellij.tar.gz
+sudo tar xvfz /tmp/intellij.tar.gz -C /opt --transform 's!^[^/]*!Intellij!'
+echo "alias intellij='/opt/Intellij/bin/idea.sh > /dev/null 2>&1 &'" >> $SHELLRC
+
+echo -e $YEL"Install DataGrip"$RST
+curl -fsSL https://download-cdn.jetbrains.com/datagrip/datagrip-${DATAGRIP_VERSION}.tar.gz -o /tmp/datagrip.tar.gz
+sudo tar xvfz /tmp/datagrip.tar.gz -C /opt --transform 's!^[^/]*!DataGrip!'
+echo "alias datagrip='/opt/DataGrip/bin/datagrip.sh > /dev/null 2>&1 &'" >> $SHELLRC
 
 echo -e $YEL"Install Docker"$RST
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
@@ -57,8 +70,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update -qqq
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -qqq -y
-
-sudo apt-get autoremove -y
-
 sudo usermod -aG docker $USER
-newgrp docker
+
+sudo apt-get autoremove -qqq -y
+echo -e $YEL"Installation completed successfully"$RST
