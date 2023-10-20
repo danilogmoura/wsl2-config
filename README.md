@@ -12,6 +12,11 @@ Download and Install latast version
 https://github.com/microsoft/WSL
 
 
+### Suppress the sudo prompt
+sudo visudo
+demo ALL=(ALL) NOPASSWD: ALL
+
+
 ### Installing Ubuntu on WSL ###
 PS > wsl --list --verbose
 PS > wsl --list --online
@@ -45,14 +50,8 @@ $ exit
 PS > wsl --terminate Ubuntu-22.04
 
 
-## Install OhMyZsh (Optional) (https://github.com/ohmyzsh/ohmyzsh) ##
-$ sudo apt install zsh -y
-$ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-	## Aphrodite Terminal Theme (https://github.com/win0err/aphrodite-terminal-theme)
-	$ git clone --quiet https://github.com/win0err/aphrodite-terminal-theme ~/.oh-my-zsh/custom/themes/aphrodite
-	$ omz theme set aphrodite/aphrodite
-	$ omz reload
+## Install Oohmyposh (Optional) (https://ohmyposh.dev/docs/installation/linux) ##
+$ curl -s https://ohmyposh.dev/install.sh | sudo bash -s
 
 
 ## Install Docker ##
@@ -135,3 +134,24 @@ $ sudo tar -xzf pstmn.tar.gz -C /opt
 
 alias postman="/opt/Postman/Postman > /dev/null 2>&1 &"
 
+
+Add Windows font folder path to /etc/fonts/local.conf
+
+/etc/fonts/local.conf
+
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+    <dir>/mnt/c/Windows/Fonts</dir>
+</fontconfig>
+
+
+wsl --import DISTRO-NAME INSTALL-LOCATION PATH\FILE-NAME.tar
+wsl --import Ubuntu C:\Users\USERNAME\Distros C:\ubuntu-backup.tar
+
+
+### Oh My Posh a beautiful prompt for your shell
+mkdir .ohmyposh_dev
+curl -s https://ohmyposh.dev/install.sh | bash -s -- -d .ohmyposh_dev
+echo 'export PATH="${HOME}/.ohmyposh_dev:${PATH}"' >> ~/.bashrc
+echo 'eval "$(oh-my-posh init bash --config ${HOME}/.cache/oh-my-posh/themes/wopian.omp.json)"' >> ~/.bashrc

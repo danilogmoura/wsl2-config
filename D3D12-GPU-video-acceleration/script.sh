@@ -11,22 +11,17 @@ if [[ $SHELL != *"$CURRENT_SHELL"* ]]; then
     SHELLRC="$HOME/.zshrc"
 fi
 
-sudo apt-get update -qq
+sudo apt-get update
 sudo apt-get upgrade -y
 
-sudo apt-get install binutils make perl libx11-6 libx11-dev	zlib1g zlib1g-dev tcsh -y
+sudo apt-get install binutils make perl x11-utils libx11-6 libx11-dev zlib1g zlib1g-dev tcsh -y
 
 sudo add-apt-repository ppa:oibaf/graphics-drivers 
-sudo apt-get update -qq
+sudo apt-get update
 sudo apt-get upgrade -y
 
 sudo apt-get install ppa-purge -y 
 sudo ppa-purge ppa:oibaf/graphics-drivers
-
-# Setting up Video acceleration in WSLg
-sudo apt-get update -qq
-sudo apt-get upgrade -y
-
 sudo apt-get install vainfo mesa-va-drivers -y
 
 echo "export LIBVA_DRIVER_NAME=d3d12" >> $SHELLRC
