@@ -18,14 +18,14 @@ demo ALL=(ALL) NOPASSWD: ALL
 
 
 ### Installing Ubuntu on WSL ###
-PS > wsl --list --verbose </ br>
-PS > wsl --list --online </ br> 
+PS > wsl --list --verbose <\ br>
+PS > wsl --list --online <\ br> 
 PS > wsl --install Ubuntu-22.04
 
 
 ### WSL Configuration ###
-touch ~/.hushlogin </ br>
-$ sudo apt update </ br>
+touch ~/.hushlogin <\ br>
+$ sudo apt update <\ br>
 $ sudo apt upgrade -y
 
 # Change ubuntu WSL2 Hostname permanently (Optional)
