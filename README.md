@@ -18,14 +18,14 @@ demo ALL=(ALL) NOPASSWD: ALL
 
 
 ### Installing Ubuntu on WSL ###
-PS > wsl --list --verbose <\ br>
-PS > wsl --list --online <\ br> 
+PS > wsl --list --verbose 
+PS > wsl --list --online 
 PS > wsl --install Ubuntu-22.04
 
 
 ### WSL Configuration ###
-touch ~/.hushlogin <\ br>
-$ sudo apt update <\ br>
+touch ~/.hushlogin 
+$ sudo apt update 
 $ sudo apt upgrade -y
 
 # Change ubuntu WSL2 Hostname permanently (Optional)
@@ -60,10 +60,10 @@ $ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; 
 
 # Install using the Apt repository
 # Add Docker's official GPG key:
-$ sudo apt-get update </ br>
-$ sudo apt-get install ca-certificates curl gnupg </ br>
-$ sudo install -m 0755 -d /etc/apt/keyrings </ br>
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg </ br>
+$ sudo apt-get update 
+$ sudo apt-get install ca-certificates curl gnupg 
+$ sudo install -m 0755 -d /etc/apt/keyrings 
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg 
 $ sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the repository to Apt sources:
@@ -75,17 +75,17 @@ $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 # Manage Docker as a non-root user
-$ sudo groupadd docker </ br>
-$ sudo usermod -aG docker $USER </ br>
-$ newgrp docker </ br>
+$ sudo groupadd docker 
+$ sudo usermod -aG docker $USER 
+$ newgrp docker 
 $ docker run hello-world
 
 
 ## Node Version Manager (https://github.com/nvm-sh/nvm) ##
 ## https://www.linode.com/docs/guides/how-to-install-use-node-version-manager-nvm/ ##
-$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash </ br>
-$ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" </ br>
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm </ br>
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash 
+$ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" 
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm 
 $ nvm --version
 
 
@@ -93,10 +93,10 @@ $ nvm --version
 $ curl https://pyenv.run | bash
 
 ## Google Chrome ##
-$ cd /tmp </ br>
-$ sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb </ br>
-$ sudo dpkg -i google-chrome-stable_current_amd64.deb </ br> 
-$ sudo apt install --fix-broken -y </ br>
+$ cd /tmp 
+$ sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 
+$ sudo dpkg -i google-chrome-stable_current_amd64.deb 
+$ sudo apt install --fix-broken -y 
 $ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 alias chrome="google-chrome > /dev/null 2>&1 &"
