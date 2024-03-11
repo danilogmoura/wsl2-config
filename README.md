@@ -13,7 +13,7 @@ https://github.com/microsoft/WSL
 
 
 ### Suppress the sudo prompt
-sudo visudo </ br>
+sudo visudo 
 demo ALL=(ALL) NOPASSWD: ALL
 
 
